@@ -5,7 +5,10 @@ const completeList = document.querySelector(".list-tasks")
 let listItems = []
 
 function addNewTask() {
-    listItems.push(input.value)
+    listItems.push({
+        task: input.value,
+        finish: false
+    })
 
     input.value = ''
 
@@ -16,13 +19,13 @@ function showTasks() {
 
     let newLi = ''
 
-    listItems.forEach((task, index) => {
+    listItems.forEach((item, index) => {
 
         newLi = newLi +
             `
-            <li class="task">
-                <img src="./img/checked.png" alt="check-task">
-                <p>${task}</p>
+            <li class="task ${item.finish && "done"}">
+                <img src="./img/checked.png" alt="check-task" onclick="finishTask(${index})">
+                <p>${item.task}</p>
                 <img src="./img/trash.png" alt="delete-task" onclick="deleteItem(${index})">
             </li>
         `
@@ -30,6 +33,14 @@ function showTasks() {
 
     completeList.innerHTML = newLi
 
+    localStorage.setItem('list', JSON.stringify(listItems) )
+
+}
+
+function finishTask(index) {
+    listItems[index].finish = !listItems[index].finish
+
+    showTasks()
 }
 
 function deleteItem(index) {
