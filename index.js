@@ -33,7 +33,7 @@ function showTasks() {
 
     completeList.innerHTML = newLi
 
-    localStorage.setItem('list', JSON.stringify(listItems) )
+    localStorage.setItem('list', JSON.stringify(listItems))
 
 }
 
@@ -49,4 +49,16 @@ function deleteItem(index) {
     showTasks()
 }
 
+function reloadTask() {
+    const tasksLocalStorage = localStorage.getItem('list')
+
+    if (tasksLocalStorage) {
+        listItems = JSON.parse(tasksLocalStorage)
+    }
+    showTasks()
+
+
+}
+
+reloadTask()
 button.addEventListener('click', addNewTask)
